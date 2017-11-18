@@ -160,6 +160,7 @@ public class AddProduct extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
+        jPanel22 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jLabel43 = new javax.swing.JLabel();
@@ -403,7 +404,7 @@ public class AddProduct extends javax.swing.JFrame {
         );
 
         jPanel2.add(jPanel9);
-        jPanel9.setBounds(4, 203, 212, 61);
+        jPanel9.setBounds(4, 203, 187, 61);
 
         jPanel10.setBackground(new java.awt.Color(51, 51, 0));
 
@@ -589,7 +590,7 @@ public class AddProduct extends javax.swing.JFrame {
         );
 
         jPanel2.add(jPanel14);
-        jPanel14.setBounds(6, 533, 208, 61);
+        jPanel14.setBounds(6, 533, 215, 61);
 
         jPanel15.setBackground(new java.awt.Color(51, 51, 0));
 
@@ -690,7 +691,7 @@ public class AddProduct extends javax.swing.JFrame {
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 403, Short.MAX_VALUE))
+                        .addGap(223, 403, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton13)
@@ -714,7 +715,7 @@ public class AddProduct extends javax.swing.JFrame {
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton13)
                     .addComponent(jButton11)
@@ -739,7 +740,7 @@ public class AddProduct extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         Add.addTab("List Product", jPanel16);
@@ -1048,6 +1049,19 @@ public class AddProduct extends javax.swing.JFrame {
         );
 
         Add.addTab("Print Labels", jPanel18);
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 895, Short.MAX_VALUE)
+        );
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 764, Short.MAX_VALUE)
+        );
+
+        Add.addTab("tab6", jPanel22);
 
         bg.add(Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 900, 800));
 
@@ -1374,6 +1388,7 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel3;

@@ -197,7 +197,7 @@ public class Login extends javax.swing.JFrame {
                     if (uname.equalsIgnoreCase(rs.getString("username")) && pass.equalsIgnoreCase(rs.getString("password"))) {
                         JOptionPane.showMessageDialog(this, "LOGIN SUCCESSFUL");
                         new Home1().setVisible(true);
-                        setVisible(false);
+                       setVisible(false);
                     }
                 
             } else {
