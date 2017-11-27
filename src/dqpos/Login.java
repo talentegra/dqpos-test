@@ -181,25 +181,27 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-         String uname = username.getText();
+
+        String uname = username.getText();
         String pass = password.getText();
-         try {
+        try {
 
             conn = dqpos.DBConnect.getConnection();
-                PreparedStatement pstmt1 = conn.prepareStatement("SELECT username,password FROM dq_users WHERE username=? AND password=?");
-                pstmt1.setString(1, uname);
-                pstmt1.setString(2, pass);
+            PreparedStatement pstmt1 = conn.prepareStatement("SELECT username,password FROM dq_users WHERE username=? AND password=?");
+            pstmt1.setString(1, uname);
+            pstmt1.setString(2, pass);
 
-                ResultSet rs = pstmt1.executeQuery();
+            ResultSet rs = pstmt1.executeQuery();
 
-                if (rs.next()) {
-                    if (uname.equalsIgnoreCase(rs.getString("username")) && pass.equalsIgnoreCase(rs.getString("password"))) {
-                        JOptionPane.showMessageDialog(this, "LOGIN SUCCESSFUL");
-                        new Home1().setVisible(true);
-                       setVisible(false);
-                    }
-                
+            if (rs.next()) {
+                if (uname.equalsIgnoreCase(rs.getString("username")) && pass.equalsIgnoreCase(rs.getString("password"))) {
+                   // JOptionPane.showMessageDialog(this, "LOGIN SUCCESSFUL");
+
+                    new Home1().setVisible(true);
+                   setVisible(false);
+                   
+                }
+
             } else {
                 JOptionPane.showMessageDialog(this, "LOGIN UNSUCCESSFUL", "ERROR", JOptionPane.ERROR_MESSAGE);
                 System.err.println("LOGIN UNSUCCESSFULL");
@@ -212,7 +214,7 @@ public class Login extends javax.swing.JFrame {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
