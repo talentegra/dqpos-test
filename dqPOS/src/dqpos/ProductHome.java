@@ -47,13 +47,16 @@ public class ProductHome extends javax.swing.JFrame {
 
         initComponents();
 
-     
         addTabbedPane();
         showDate();
         Show_Product_in_Table();
         ButtonGroup bg = new ButtonGroup();
         bg.add(r1);
-       
+//        jComboBoxType.setEnabled(false);
+//        jComboBarcode.setEnabled(false);
+//        jComboBoxCategory.setEnabled(false);
+//        jComboBoxTax.setEnabled(false);
+
     }
 
     public void Show_Product_in_Table() {
@@ -229,7 +232,6 @@ public class ProductHome extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        jButton26 = new javax.swing.JButton();
         jButton27 = new javax.swing.JButton();
         jPanel26 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -831,16 +833,6 @@ public class ProductHome extends javax.swing.JFrame {
         jLabel4.setText("Products");
         jPanelHome.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 93, 27));
 
-        jButton26.setBackground(new java.awt.Color(153, 255, 153));
-        jButton26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton26.setText("Save");
-        jButton26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
-            }
-        });
-        jPanelHome.add(jButton26, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 700, 70, 30));
-
         jButton27.setBackground(new java.awt.Color(153, 255, 153));
         jButton27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton27.setText("Cancel");
@@ -849,7 +841,7 @@ public class ProductHome extends javax.swing.JFrame {
                 jButton27ActionPerformed(evt);
             }
         });
-        jPanelHome.add(jButton27, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 700, 80, 30));
+        jPanelHome.add(jButton27, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 700, 80, 30));
 
         javax.swing.GroupLayout jPanelCustomerLayout = new javax.swing.GroupLayout(jPanelCustomer);
         jPanelCustomer.setLayout(jPanelCustomerLayout);
@@ -1538,7 +1530,10 @@ public class ProductHome extends javax.swing.JFrame {
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
         // TODO add your handling code here:
 
-        jTextProductname.setEnabled(true);
+        jTextProductname.setEnabled(true); 
+        EditProduct EP = new EditProduct();
+        EP.setVisible(true);
+        
         try {
 
             Connection conn = DBConnect.getConnection();
@@ -1550,27 +1545,24 @@ public class ProductHome extends javax.swing.JFrame {
                     + "'" + name1 + "'";
             ResultSet l_objResultSet = l_objStatement.executeQuery(l_strQuery1);
 
-            EditProduct EP = new EditProduct();
-            EP.setVisible(true);
-
             if (l_objResultSet != null) {
                 while (l_objResultSet.next()) {
 
                     EP.jTextProductID.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("id"), false));
                     EP.jTextFieldCode.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("code"), false));
                     EP.jTextFieldName.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("name"), false));
-                    EP.jComboBoxCategory.setSelectedItem(SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_categories", "code", "id", SDCommonUtil.convertNullToBlank(l_objResultSet.getString("category_id"), false), false));
+                    EP.jComboBoxCategory.setSelectedItem(SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_categories", "id", "code", SDCommonUtil.convertNullToBlank(l_objResultSet.getString("category_id"), false), false));
                     EP.jTextFieldPrice.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("price"), false));
                     EP.jTextFieldImage.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("image"), false));
-                    EP.jComboBoxTax.setSelectedItem(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("tax"), false));
+                    EP.jTextFieldProdTax.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("tax"), false));
                     EP.jTextFieldCost.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("cost"), false));
-                    EP.jTextFieldProdTax.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("tax_method"), false));
+                    EP.jComboBoxTax.setSelectedItem(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("tax_method"), false));
                     EP.jTextFieldQuantity.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("quantity"), false));
                     EP.jComboBarcode.setSelectedItem(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("barcode_symbology"), false));
                     EP.jComboBoxType.setSelectedItem(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("type"), false));
                     EP.jTextArea1.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("details"), false));
                     EP.jTextFieldAlertQty.setText(SDCommonUtil.convertNullToBlank(l_objResultSet.getString("alert_quantity"), false));
-
+                     dispose();
                 }
             }
             l_objResultSet.close();
@@ -1582,6 +1574,9 @@ public class ProductHome extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
+        
+        
+      
 
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
@@ -1643,58 +1638,6 @@ public class ProductHome extends javax.swing.JFrame {
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jScrollPane1MouseClicked
-
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-
-//        String name = jTextField2.getText();
-//        String email = jTextField1.getText();
-//        String phone = jTextField9.getText();
-//        String cf1 = jTextField8.getText();
-//        String cf2 = jTextField4.getText();
-//        String store_id = jComboBox4.getSelectedItem().toString();
-//        String l_strRole = "";
-//        String l_strStatus = "";
-//        String l_strStore = "";
-//        try {
-//
-//            Connection conn = DBConnect.getConnection();
-//            conn.setAutoCommit(true);
-//            Statement l_objStatement = conn.createStatement();
-//            Statement l_objStatement1 = conn.createStatement();
-//
-//            if (store_id != null && !store_id.equals("")) {
-//                if (store_id.equals("SimplePOS")) {
-//                    l_strStore = "SimplePOS";
-//                }
-//
-//            }
-//
-//            String l_strQuery = "insert into  dq_customers "
-//            + "(name,email,phone,cf1,cf2,store_id)"
-//            + "values("
-//            + "'" + name + "'"
-//            + ",'" + email + "'"
-//            + ",'" + phone + "'"
-//            + ",'" + cf1 + "'"
-//            + ",'" + cf2 + "'"
-//            + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_stores", "name", "id", "'" + l_strStore + "'", true) + ""
-//            + ")";
-//            int i = l_objStatement.executeUpdate(l_strQuery);
-//            if (i > 0) {
-//                JOptionPane.showMessageDialog(this, "Customer Inserted Sucessfully");
-//
-//                conn.setAutoCommit(true);
-//
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Failed");
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         // TODO add your handling code here:
@@ -1811,7 +1754,6 @@ public class ProductHome extends javax.swing.JFrame {
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;

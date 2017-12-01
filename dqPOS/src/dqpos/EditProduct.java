@@ -33,12 +33,10 @@ public class EditProduct extends javax.swing.JFrame {
     public EditProduct() {
 
         initComponents();
-        initComponents();
+        
         BindComboCategory();
-        jComboBoxType.setEnabled(false);
-        jComboBarcode.setEnabled(false);
-        jComboBoxCategory.setEnabled(false);
-        jComboBoxTax.setEnabled(false);
+        
+       // ViewProduct();
 
     }
 
@@ -55,6 +53,13 @@ public class EditProduct extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
+//    public void ViewProduct() {
+//
+//        ProductHome ph = new ProductHome();
+//
+//      
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -300,7 +305,7 @@ public class EditProduct extends javax.swing.JFrame {
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         // TODO add your handling code here:
         dispose();
-        // new ProductHome().setVisible(true);
+        new ProductHome().setVisible(true);
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
@@ -350,7 +355,7 @@ public class EditProduct extends javax.swing.JFrame {
                     + ",name="
                     + SDCommonUtil.convertBlankToNull(SDCommonUtil.checkEscapeSequenceCharacter(jTextFieldName.getText()).trim(), l_blnQuotes)
                     + ",category_id="
-                    + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_categories", "code", "id", "'" + l_strCategory + "'", l_blnQuotes)
+                    + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_categories", "code", "id", "'" + l_strCategory + "'", l_blnQuotes)
                     + ",price="
                     + SDCommonUtil.convertBlankToNull(SDCommonUtil.checkEscapeSequenceCharacter(jTextFieldPrice.getText()).trim(), l_blnQuotes)
                     + ",image="
@@ -372,7 +377,6 @@ public class EditProduct extends javax.swing.JFrame {
                     + ",alert_quantity="
                     + SDCommonUtil.convertBlankToNull(SDCommonUtil.checkEscapeSequenceCharacter(jTextFieldAlertQty.getText()).trim(), l_blnQuotes)
                     + " where id ="
-                    + SDCommonUtil.convertBlankToNull(SDCommonUtil.checkEscapeSequenceCharacter(jTextFieldImage.getText()).trim(), l_blnQuotes)
                     + Product_id;
             int res = l_objStatement.executeUpdate(l_strQuery);
 

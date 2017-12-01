@@ -276,7 +276,6 @@ public class CustomerHome extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextFieldName = new javax.swing.JTextField();
         jComboBox4 = new javax.swing.JComboBox<>();
-        jButton26 = new javax.swing.JButton();
         jButton27 = new javax.swing.JButton();
         jTextField9 = new javax.swing.JTextField();
         jSearch = new javax.swing.JButton();
@@ -867,16 +866,6 @@ public class CustomerHome extends javax.swing.JFrame {
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Store" }));
         jPanelHome.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 249, 35));
 
-        jButton26.setBackground(new java.awt.Color(153, 255, 153));
-        jButton26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton26.setText("Save");
-        jButton26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
-            }
-        });
-        jPanelHome.add(jButton26, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 70, 30));
-
         jButton27.setBackground(new java.awt.Color(153, 255, 153));
         jButton27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton27.setText("Cancel");
@@ -885,7 +874,7 @@ public class CustomerHome extends javax.swing.JFrame {
                 jButton27ActionPerformed(evt);
             }
         });
-        jPanelHome.add(jButton27, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, 80, 30));
+        jPanelHome.add(jButton27, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 410, 80, 30));
         jPanelHome.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 249, 34));
 
         jSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dqpos/images/search1.jpg"))); // NOI18N
@@ -1602,59 +1591,6 @@ public class CustomerHome extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton22ActionPerformed
 
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-
-        String name = jTextFieldName.getText();
-        String email = jTextField1.getText();
-        String phone = jTextField9.getText();
-        String cf1 = jTextField8.getText();
-        String cf2 = jTextField4.getText();
-        String store_id = jComboBox4.getSelectedItem().toString();
-        String l_strRole = "";
-        String l_strStatus = "";
-        String l_strStore = "";
-        try {
-
-            Connection conn = DBConnect.getConnection();
-            conn.setAutoCommit(true);
-            Statement l_objStatement = conn.createStatement();
-            Statement l_objStatement1 = conn.createStatement();
-
-            if (store_id != null && !store_id.equals("")) {
-                if (store_id.equals("SimplePOS")) {
-                    l_strStore = "SimplePOS";
-                }
-
-            }
-
-            String l_strQuery = "insert into  dq_customers "
-                    + "(name,email,phone,cf1,cf2,store_id)"
-                    + "values("
-                    + "'" + name + "'"
-                    + ",'" + email + "'"
-                    + ",'" + phone + "'"
-                    + ",'" + cf1 + "'"
-                    + ",'" + cf2 + "'"
-                    + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_stores", "name", "id", "'" + l_strStore + "'", true) + ""
-                    + ")";
-            int i = l_objStatement.executeUpdate(l_strQuery);
-            if (i > 0) {
-                JOptionPane.showMessageDialog(this, "Customer Inserted Sucessfully");
-
-                conn.setAutoCommit(true);
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_jButton26ActionPerformed
-
     private void jPanelHomeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanelHomeFocusGained
         // TODO add your handling code here:
 
@@ -1900,7 +1836,6 @@ public class CustomerHome extends javax.swing.JFrame {
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;

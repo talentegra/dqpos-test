@@ -253,7 +253,6 @@ public class Home1 extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
         jComboBox4 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jButtonSave = new javax.swing.JButton();
         jButton27 = new javax.swing.JButton();
         jSearch = new javax.swing.JButton();
         jSeparator12 = new javax.swing.JSeparator();
@@ -897,16 +896,6 @@ public class Home1 extends javax.swing.JFrame {
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
         jPanelHome.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 239, 249, 35));
 
-        jButtonSave.setBackground(new java.awt.Color(153, 255, 153));
-        jButtonSave.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButtonSave.setText("Save");
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-        jPanelHome.add(jButtonSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 630, 70, 30));
-
         jButton27.setBackground(new java.awt.Color(153, 255, 153));
         jButton27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton27.setText("Cancel");
@@ -915,7 +904,7 @@ public class Home1 extends javax.swing.JFrame {
                 jButton27ActionPerformed(evt);
             }
         });
-        jPanelHome.add(jButton27, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 630, 80, 30));
+        jPanelHome.add(jButton27, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 630, 80, 30));
 
         jSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dqpos/images/search1.jpg"))); // NOI18N
         jSearch.setToolTipText("User");
@@ -1620,84 +1609,6 @@ public class Home1 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonNewActionPerformed
 
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        // TODO add your handling code here:
-
-        String group_id = jComboBox1.getSelectedItem().toString();
-        String fname = jTextField2.getText();
-        String lname = jTextField1.getText();
-        String phone = jTextField8.getText();
-        String gender = jComboBox2.getSelectedItem().toString();
-        String email = jTextField4.getText();
-        String uname = jTextField5.getText();
-        String password = pwd1.getText();
-        String cpwd = password2.getText();
-        String status_id = jComboBox3.getSelectedItem().toString();
-        String store_id = jComboBox4.getSelectedItem().toString();
-        String l_strRole = "";
-        String l_strStatus = "";
-        String l_strStore = "";
-        try {
-
-            Connection conn = DBConnect.getConnection();
-            conn.setAutoCommit(true);
-            Statement l_objStatement = conn.createStatement();
-            Statement l_objStatement1 = conn.createStatement();
-            if (group_id != null && !group_id.equals("")) {
-                if (group_id.equals("admin")) {
-                    l_strRole = "admin";
-                }
-                if (group_id.equals("staff")) {
-                    l_strRole = "staff";
-                }
-            }
-            if (status_id != null && !status_id.equals("")) {
-                if (status_id.equals("Active")) {
-                    l_strStatus = "Active";
-                }
-                if (status_id.equals("InActive")) {
-                    l_strStatus = "InActive";
-                }
-            }
-            if (store_id != null && !store_id.equals("")) {
-                if (store_id.equals("SimplePOS")) {
-                    l_strStore = "SimplePOS";
-                }
-
-            }
-
-            String l_strQuery = "insert into  dq_users "
-                    + "(group_id,first_name,last_name,phone,gender,email,username,password,cpwd,status,store_id)"
-                    + "values("
-                    + "" + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_groups", "name", "id", "'" + l_strRole + "'", true) + ""
-                    + ",'" + fname + "'"
-                    + ",'" + lname + "'"
-                    + ",'" + phone + "'"
-                    + ",'" + gender + "'"
-                    + ",'" + email + "'"
-                    + ",'" + uname + "'"
-                    + ",'" + password + "'"
-                    + ",'" + cpwd + "'"
-                    + ",'" + status_id + "'"
-                    //  + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_status", "name", "id", "'" + l_strStatus + "'", true) + ""
-                    + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_stores", "name", "id", "'" + l_strStore + "'", true) + ""
-                    + ")";
-            int i = l_objStatement.executeUpdate(l_strQuery);
-            if (i > 0) {
-                JOptionPane.showMessageDialog(this, "User Inserted Sucessfully");
-                conn.setAutoCommit(true);
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }//GEN-LAST:event_jButtonSaveActionPerformed
-
     private void jPanelHomeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanelHomeFocusGained
         // TODO add your handling code here:
 
@@ -2040,7 +1951,6 @@ public class Home1 extends javax.swing.JFrame {
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JButton jButtonNew;
-    private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jCategory;
     public javax.swing.JComboBox<String> jComboBox1;
     public javax.swing.JComboBox<String> jComboBox2;

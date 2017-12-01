@@ -58,8 +58,8 @@ public class EditCategory extends javax.swing.JFrame {
         jPanel21 = new javax.swing.JPanel();
         jButton17 = new javax.swing.JButton();
         jImgLbl = new javax.swing.JLabel();
-        jButton26 = new javax.swing.JButton();
-        jButton27 = new javax.swing.JButton();
+        jButtonOk = new javax.swing.JButton();
+        jCancel = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         jTextCategoryID = new javax.swing.JTextField();
 
@@ -103,30 +103,30 @@ public class EditCategory extends javax.swing.JFrame {
 
         jPanelNewUser.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, -1, -1));
 
-        jButton26.setBackground(new java.awt.Color(153, 255, 153));
-        jButton26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton26.setText("Ok");
-        jButton26.addFocusListener(new java.awt.event.FocusAdapter() {
+        jButtonOk.setBackground(new java.awt.Color(153, 255, 153));
+        jButtonOk.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButtonOk.setText("Ok");
+        jButtonOk.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jButton26FocusLost(evt);
+                jButtonOkFocusLost(evt);
             }
         });
-        jButton26.addActionListener(new java.awt.event.ActionListener() {
+        jButtonOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
+                jButtonOkActionPerformed(evt);
             }
         });
-        jPanelNewUser.add(jButton26, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 70, 30));
+        jPanelNewUser.add(jButtonOk, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 70, 30));
 
-        jButton27.setBackground(new java.awt.Color(153, 255, 153));
-        jButton27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton27.setText("Cancel");
-        jButton27.addActionListener(new java.awt.event.ActionListener() {
+        jCancel.setBackground(new java.awt.Color(153, 255, 153));
+        jCancel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jCancel.setText("Cancel");
+        jCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton27ActionPerformed(evt);
+                jCancelActionPerformed(evt);
             }
         });
-        jPanelNewUser.add(jButton27, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 80, 30));
+        jPanelNewUser.add(jCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 80, 30));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 51));
@@ -167,12 +167,12 @@ public class EditCategory extends javax.swing.JFrame {
         jTextImage.setText(filename);
     }//GEN-LAST:event_jButton17ActionPerformed
 
-    private void jButton26FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton26FocusLost
+    private void jButtonOkFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButtonOkFocusLost
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_jButton26FocusLost
+    }//GEN-LAST:event_jButtonOkFocusLost
 
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+    private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
         // TODO add your handling code here:
         try {
 
@@ -202,7 +202,7 @@ public class EditCategory extends javax.swing.JFrame {
             int res = l_objStatement.executeUpdate(l_strQuery);
 
             if (res == 1) {
-                JOptionPane.showMessageDialog(this, "Customer Updated Sucessfully");
+                JOptionPane.showMessageDialog(this, "Category Updated Sucessfully");
 
                 jTextCode.setText(" ");
                 jTextName.setText(" ");
@@ -227,13 +227,13 @@ public class EditCategory extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-    }//GEN-LAST:event_jButton26ActionPerformed
+    }//GEN-LAST:event_jButtonOkActionPerformed
 
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+    private void jCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        new CustomerHome().setVisible(true);
-    }//GEN-LAST:event_jButton27ActionPerformed
+        new CategoryHome().setVisible(true);
+    }//GEN-LAST:event_jCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,8 +280,8 @@ public class EditCategory extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
+    private javax.swing.JButton jButtonOk;
+    private javax.swing.JButton jCancel;
     private javax.swing.JLabel jImgLbl;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel23;
@@ -290,8 +290,8 @@ public class EditCategory extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel21;
     public javax.swing.JPanel jPanelNewUser;
     public javax.swing.JTextField jTextCategoryID;
-    private javax.swing.JTextField jTextCode;
-    private javax.swing.JTextField jTextImage;
-    private javax.swing.JTextField jTextName;
+    public javax.swing.JTextField jTextCode;
+    public javax.swing.JTextField jTextImage;
+    public javax.swing.JTextField jTextName;
     // End of variables declaration//GEN-END:variables
 }
