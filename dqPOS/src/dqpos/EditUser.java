@@ -281,6 +281,12 @@ public class EditUser extends javax.swing.JFrame {
             String cpwd = password2.getText();
             String status_id = jComboBox3.getSelectedItem().toString();
             String store_id = jComboBox4.getSelectedItem().toString();
+            String errorMessage = "";
+
+            final int NUM_FIELDS = 11;
+            int numCorrectFields = 0;
+
+            
 
             conn = DBConnect.getConnection();
             Statement l_objStatement = conn.createStatement();

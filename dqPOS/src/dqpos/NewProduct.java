@@ -292,14 +292,16 @@ public class NewProduct extends javax.swing.JFrame {
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
         // TODO add your handling code here:
-
+        final int NUM_FIELDS = 13;
+        int numCorrectFields = 0;
+        String errorMessage = "";
         String type = jComboBoxType.getSelectedItem().toString();
         String name = jTextFieldName.getText();
         String code = jTextFieldCode.getText();
         String barcode = jComboBarcode.getSelectedItem().toString();
         String category_id = jComboCategory.getSelectedItem().toString();
-        String cost = jTextFieldCost.getText();
-        String price = jTextFieldPrice.getText();
+        int cost = Integer.parseInt(jTextFieldCost.getText());
+        int price = Integer.parseInt(jTextFieldPrice.getText());
         String prodtax = jTextFieldProdTax.getText();
         String tax_method = jComboBoxTax.getSelectedItem().toString();
         String alertqty = jTextFieldAlertQty.getText();
@@ -308,6 +310,56 @@ public class NewProduct extends javax.swing.JFrame {
         String details = jTextArea1.getText();
 
         try {
+            if (jTextFieldName.getText().equalsIgnoreCase("<enter name>") || jTextFieldName.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("NAME FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                name = jTextFieldName.getText();
+            }
+            if (jTextFieldCode.getText().equalsIgnoreCase("<enter name>") || jTextFieldCode.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("CODE FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                code = jTextFieldCode.getText();
+            }
+            if (jTextFieldCost.getText().equalsIgnoreCase("<enter name>") || jTextFieldCost.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("COST FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                cost = Integer.parseInt(jTextFieldCost.getText());
+            }
+            if (jTextFieldPrice.getText().equalsIgnoreCase("<enter name>") || jTextFieldPrice.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("PRICE FIELD IS MISSING.\n");
+            } else {
+                try {
+
+                    int price1 = Integer.parseInt(jTextFieldPrice.getText());
+                    if (price1 <= 0 || price1 >= 10) {
+                        errorMessage = errorMessage.concat("PRICE MUST BE  DIGITS \n");
+                    } else {
+                        price = price1;
+                        numCorrectFields++;
+                    }
+
+                } catch (NumberFormatException e) {
+                    errorMessage = errorMessage.concat("PRICE  IS NOT  VALID \n");
+                }
+
+            }
+            
+
+            if (jComboBoxTax.getSelectedItem().toString().isEmpty()) {
+                errorMessage = errorMessage.concat("YOU MUST SELECT A GENDER \n");
+            } else {
+                tax_method = jComboBoxTax.getSelectedItem().toString();
+                numCorrectFields++;
+            }
+             if (numCorrectFields < NUM_FIELDS) {
+
+                JOptionPane.showMessageDialog(null, errorMessage, "INVALID/INCOMPLETE USER INPUT", JOptionPane.ERROR_MESSAGE);
+                int p = JOptionPane.showConfirmDialog(this, "Do you really wnat to coninue", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (p == 0) {
+
             conn = DBConnect.getConnection();
             Statement l_objStatement = conn.createStatement();
             Statement l_objStatement1 = conn.createStatement();
@@ -344,7 +396,7 @@ public class NewProduct extends javax.swing.JFrame {
             int i = l_objStatement.executeUpdate(l_strQuery);
             if (i > 0) {
                 JOptionPane.showMessageDialog(this, "Product Inserted Sucessfully");
-
+            }}
                 jComboBoxType.setSelectedItem("");
                 jTextFieldName.setText("");
                 jTextFieldCode.setText("");
@@ -363,9 +415,9 @@ public class NewProduct extends javax.swing.JFrame {
                 ProductHome ph = new ProductHome();
 
                 ph.setVisible(true);
-              
+
                 ph.jTextProductname.setText(name);
-                 ph.jTextProductname.setEnabled(false);
+                ph.jTextProductname.setEnabled(false);
                 conn.setAutoCommit(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Failed");

@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import com.utils.SDCommonUtil;
 import com.commons.Constants;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 /**
@@ -99,6 +101,10 @@ public class NewUser extends javax.swing.JFrame {
         }
     }
 
+//    public static boolean email_validations(String email)
+//    {
+//    
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,6 +199,15 @@ public class NewUser extends javax.swing.JFrame {
         jPanelNewUser.add(pwd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 416, 249, 34));
         jPanelNewUser.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 347, 249, 34));
         jPanelNewUser.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 289, 249, 34));
+
+        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField8KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField8KeyTyped(evt);
+            }
+        });
         jPanelNewUser.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 175, 249, 34));
         jPanelNewUser.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 123, 249, 34));
         jPanelNewUser.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 63, 249, 34));
@@ -215,7 +230,7 @@ public class NewUser extends javax.swing.JFrame {
         jPanelNewUser.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 577, 249, 35));
 
         jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gender", "Male", "Female" }));
         jPanelNewUser.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 239, 249, 35));
 
         jButtonOk.setBackground(new java.awt.Color(153, 255, 153));
@@ -263,12 +278,13 @@ public class NewUser extends javax.swing.JFrame {
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
         // TODO add your handling code here:
 
-      
-
+        final int NUM_FIELDS = 11;
+        int numCorrectFields = 0;
+        String errorMessage = "";
         String group_id = jComboBox1.getSelectedItem().toString();
         String fname = jTextField2.getText();
         String lname = jTextField1.getText();
-        String phone = jTextField8.getText();
+        int phone = Integer.parseInt(jTextField8.getText());
         String gender = jComboBox2.getSelectedItem().toString();
         String email = jTextField4.getText();
         String uname = jTextField5.getText();
@@ -279,54 +295,104 @@ public class NewUser extends javax.swing.JFrame {
         String l_strRole = "";
         String l_strStatus = "";
         String l_strStore = "";
+
         try {
 
-            conn = DBConnect.getConnection();
-            conn.setAutoCommit(true);
-            Statement l_objStatement = conn.createStatement();
-            Statement l_objStatement1 = conn.createStatement();
-            if (group_id != null && !group_id.equals("")) {
-                if (group_id.equals("admin")) {
-                    l_strRole = "admin";
-                }
-                if (group_id.equals("staff")) {
-                    l_strRole = "staff";
-                }
+            if (jTextField2.getText().equalsIgnoreCase("<enter name>") || jTextField2.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("NAME FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                fname = jTextField2.getText();
             }
-            if (status_id != null && !status_id.equals("")) {
-                if (status_id.equals("Active")) {
-                    l_strStatus = "Active";
-                }
-                if (status_id.equals("InActive")) {
-                    l_strStatus = "InActive";
-                }
+            if (jTextField1.getText().equalsIgnoreCase("<enter name>") || jTextField1.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("NAME FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                lname = jTextField1.getText();
             }
-            if (store_id != null && !store_id.equals("")) {
-                if (store_id.equals("SimplePOS")) {
-                    l_strStore = "SimplePOS";
+            if (jTextField8.getText().equalsIgnoreCase("<enter name>") || jTextField8.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("PHONE FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                phone = Integer.parseInt(jTextField8.getText());
+            }
+            if (jTextField8.getText().equalsIgnoreCase("<enter name>") || jTextField8.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("USER NAME IS MISSING.\n");
+            } else {
+                try {
+
+                    int phone1 = Integer.parseInt(jTextField8.getText());
+                    if (phone1 <= 0 || phone1 >= 10) {
+                        errorMessage = errorMessage.concat("PHONE NUMBER MUST BE OF 10 DIGITS \n");
+                    } else {
+                        phone = phone1;
+                        numCorrectFields++;
+                    }
+
+                } catch (NumberFormatException e) {
+                    errorMessage = errorMessage.concat("PHONE NUMBER IS NOT  VALID \n");
                 }
 
             }
+            if (jComboBox2.getSelectedItem().toString().isEmpty()) {
+                errorMessage = errorMessage.concat("YOU MUST SELECT A GENDER \n");
+            } else {
+                gender = jComboBox2.getSelectedItem().toString();
+                numCorrectFields++;
+            }
+            if (numCorrectFields < NUM_FIELDS) {
 
-            String l_strQuery = "insert into  dq_users "
-                    + "(group_id,first_name,last_name,phone,gender,email,username,password,cpwd,status,store_id)"
-                    + "values("
-                    + "" + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_groups", "name", "id", "'" + l_strRole + "'", true) + ""
-                    + ",'" + fname + "'"
-                    + ",'" + lname + "'"
-                    + ",'" + phone + "'"
-                    + ",'" + gender + "'"
-                    + ",'" + email + "'"
-                    + ",'" + uname + "'"
-                    + ",'" + password + "'"
-                    + ",'" + cpwd + "'"
-                    + ",'" + status_id + "'"
-                    //  + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_status", "name", "id", "'" + l_strStatus + "'", true) + ""
-                    + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_stores", "name", "id", "'" + l_strStore + "'", true) + ""
-                    + ")";
-            int i = l_objStatement.executeUpdate(l_strQuery);
-            if (i > 0) {
-                JOptionPane.showMessageDialog(this, "User Inserted Sucessfully");
+                JOptionPane.showMessageDialog(null, errorMessage, "INVALID/INCOMPLETE USER INPUT", JOptionPane.ERROR_MESSAGE);
+                int p = JOptionPane.showConfirmDialog(this, "Do you really wnat to coninue", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (p == 0) {
+
+                    conn = DBConnect.getConnection();
+                    conn.setAutoCommit(true);
+                    Statement l_objStatement = conn.createStatement();
+                    Statement l_objStatement1 = conn.createStatement();
+                    if (group_id != null && !group_id.equals("")) {
+                        if (group_id.equals("admin")) {
+                            l_strRole = "admin";
+                        }
+                        if (group_id.equals("staff")) {
+                            l_strRole = "staff";
+                        }
+                    }
+                    if (status_id != null && !status_id.equals("")) {
+                        if (status_id.equals("Active")) {
+                            l_strStatus = "Active";
+                        }
+                        if (status_id.equals("InActive")) {
+                            l_strStatus = "InActive";
+                        }
+                    }
+                    if (store_id != null && !store_id.equals("")) {
+                        if (store_id.equals("SimplePOS")) {
+                            l_strStore = "SimplePOS";
+                        }
+
+                    }
+
+                    String l_strQuery = "insert into  dq_users "
+                            + "(group_id,first_name,last_name,phone,gender,email,username,password,cpwd,status,store_id)"
+                            + "values("
+                            + "" + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_groups", "name", "id", "'" + l_strRole + "'", true) + ""
+                            + ",'" + fname + "'"
+                            + ",'" + lname + "'"
+                            + ",'" + phone + "'"
+                            + ",'" + gender + "'"
+                            + ",'" + email + "'"
+                            + ",'" + uname + "'"
+                            + ",'" + password + "'"
+                            + ",'" + cpwd + "'"
+                            + ",'" + status_id + "'"
+                            + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_stores", "name", "id", "'" + l_strStore + "'", true) + ""
+                            + ")";
+                    int i = l_objStatement.executeUpdate(l_strQuery);
+                    if (i > 0) {
+                        JOptionPane.showMessageDialog(this, "User Inserted Sucessfully");
+                    }
+                }
                 jComboBox1.setSelectedIndex(-1);
                 jTextField2.setText("");
                 jTextField1.setText("");
@@ -348,7 +414,7 @@ public class NewUser extends javax.swing.JFrame {
                 nh.jComboBox1.setSelectedItem(group_id);
                 nh.jTextField2.setText(fname);
                 nh.jTextField1.setText(lname);
-                nh.jTextField8.setText(phone);
+                nh.jTextField8.setText(String.valueOf(phone));
                 nh.jComboBox2.setSelectedItem(gender);
                 nh.jTextField4.setText(email);
                 nh.jTextField5.setText(uname);
@@ -394,6 +460,36 @@ public class NewUser extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
+    private void jTextField8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyPressed
+        // TODO add your handling code here:
+        String errorMessage = "";
+        final int NUM_FIELDS = 7;
+        int numCorrectFields = 0;
+        //int phone = Integer.parseInt(jTextField8.getText());
+
+        char c = evt.getKeyChar();
+        //  if ((key >= evt.VK_0 && key <= evt.VK_9) || (key >= evt.VK_NUMPAD0 && key <= evt.VK_NUMPAD9) || key == KeyEvent.VK_BACK_SPACE) {
+        if (!Character.isDigit(c)) {
+
+            getToolkit().beep();
+            evt.consume();
+            jTextField8.setEditable(true);
+            jTextField8.setBackground(Color.yellow);
+        } else {
+
+            jTextField8.setEditable(true);
+            jTextField8.setBackground(Color.red);
+            //  JOptionPane.showMessageDialog(this, "Invalid Number");
+        }
+
+    }//GEN-LAST:event_jTextField8KeyPressed
+
+    private void jTextField8KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyTyped
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jTextField8KeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -426,9 +522,8 @@ public class NewUser extends javax.swing.JFrame {
             public void run() {
                 new NewUser().setVisible(true);
 
-                  new Home1().setVisible(false);
+                new Home1().setVisible(false);
 
-                
             }
         });
     }

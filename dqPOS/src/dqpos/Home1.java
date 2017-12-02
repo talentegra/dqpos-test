@@ -28,6 +28,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import com.utils.SDCommonUtil;
 import com.commons.Constants;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JPanel;
@@ -866,6 +868,12 @@ public class Home1 extends javax.swing.JFrame {
         jPanelHome.add(pwd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 416, 249, 34));
         jPanelHome.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 347, 249, 34));
         jPanelHome.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 289, 249, 34));
+
+        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField8KeyPressed(evt);
+            }
+        });
         jPanelHome.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 175, 249, 34));
         jPanelHome.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 123, 249, 34));
         jPanelHome.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 63, 249, 34));
@@ -1562,7 +1570,7 @@ public class Home1 extends javax.swing.JFrame {
     private void jCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCategoryActionPerformed
         // TODO add your handling code here:
 
-         if (evt.getSource() == jCategory) {
+        if (evt.getSource() == jCategory) {
 
             CategoryHome CH = new CategoryHome();
             CH.setVisible(true);
@@ -1887,8 +1895,14 @@ public class Home1 extends javax.swing.JFrame {
 
     private void jTextFieldSearchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldSearchMouseReleased
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jTextFieldSearchMouseReleased
+
+    private void jTextField8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyPressed
+        // TODO add your handling code here:
+
+       
+    }//GEN-LAST:event_jTextField8KeyPressed
 
     /**
      * @param args the command line arguments

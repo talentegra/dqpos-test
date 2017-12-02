@@ -133,7 +133,7 @@ public class NewCustomer extends javax.swing.JFrame {
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(153, 0, 51));
-        jLabel32.setText("CCF1");
+        jLabel32.setText("CCF2");
         jPanelNewUser.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 80, 27));
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -202,70 +202,122 @@ public class NewCustomer extends javax.swing.JFrame {
         String l_strRole = "";
         String l_strStatus = "";
         String l_strStore = "";
+        final int NUM_FIELDS = 6;
+        int numCorrectFields = 0;
+        String errorMessage = "";
         try {
 
-            conn = DBConnect.getConnection();
-            conn.setAutoCommit(true);
-            Statement l_objStatement = conn.createStatement();
-            Statement l_objStatement1 = conn.createStatement();
-
-            if (store_id != null && !store_id.equals("")) {
-                if (store_id.equals("SimplePOS")) {
-                    l_strStore = "SimplePOS";
-                }
-
+            if (jTextField2.getText().equalsIgnoreCase("<enter name>") || jTextField2.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("NAME FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                name = jTextField2.getText();
             }
 
-            String l_strQuery = "insert into  dq_customers "
-                    + "(name,email,phone,cf1,cf2,store_id)"
-                    + "values("
-                    + "'" + name + "'"
-                    + ",'" + email + "'"
-                    + ",'" + phone + "'"
-                    + ",'" + cf1 + "'"
-                    + ",'" + cf2 + "'"
-                    + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_stores", "name", "id", "'" + l_strStore + "'", true) + ""
-                    + ")";
-            int i = l_objStatement.executeUpdate(l_strQuery);
-            if (i > 0) {
-                JOptionPane.showMessageDialog(this, "Customer Inserted Sucessfully");
+            if (jTextField1.getText().equalsIgnoreCase("<enter name>") || jTextField1.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("NAME FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                email = jTextField1.getText();
+            }
 
-                jTextField2.setText("");
-                jTextField1.setText("");
-                jTextField9.setText("");
-                jTextField8.setText("");
-                jTextField4.setText("");
-                jComboBox4.setSelectedIndex(-1);
+            if (jTextField9.getText().equalsIgnoreCase("<enter name>") || jTextField9.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("NAME FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                phone = jTextField9.getText();
+            }
 
-                dispose();
-               
+            if (jTextField8.getText().equalsIgnoreCase("<enter name>") || jTextField8.getText().isEmpty()) {
+                errorMessage = errorMessage.concat(" EMAIL FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                email = jTextField8.getText();
+            }
+
+            if (jTextField2.getText().equalsIgnoreCase("<enter name>") || jTextField2.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("CF1 FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                cf1 = jTextField2.getText();
+            }
+
+            if (jTextField4.getText().equalsIgnoreCase("<enter name>") || jTextField4.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("CF2 FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                cf2 = jTextField4.getText();
+            }
+
+          
+                if (numCorrectFields < NUM_FIELDS) {
+
+                    JOptionPane.showMessageDialog(null, errorMessage, "INVALID/INCOMPLETE USER INPUT", JOptionPane.ERROR_MESSAGE);
+                    int p = JOptionPane.showConfirmDialog(this, "Do you really wnat to coninue", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION);
+                    if (p == 0) {
+
+                        conn = DBConnect.getConnection();
+                        conn.setAutoCommit(true);
+                        Statement l_objStatement = conn.createStatement();
+                        Statement l_objStatement1 = conn.createStatement();
+
+                        if (store_id != null && !store_id.equals("")) {
+                            if (store_id.equals("SimplePOS")) {
+                                l_strStore = "SimplePOS";
+                            }
+
+                        }
+
+                        String l_strQuery = "insert into  dq_customers "
+                                + "(name,email,phone,cf1,cf2,store_id)"
+                                + "values("
+                                + "'" + name + "'"
+                                + ",'" + email + "'"
+                                + ",'" + phone + "'"
+                                + ",'" + cf1 + "'"
+                                + ",'" + cf2 + "'"
+                                + "," + SDCommonUtil.convertValuesForValueAndID(l_objStatement1, Constants.DB_NAME + ".dq_stores", "name", "id", "'" + l_strStore + "'", true) + ""
+                                + ")";
+                        int i = l_objStatement.executeUpdate(l_strQuery);
+                        if (i > 0) {
+                            JOptionPane.showMessageDialog(this, "Customer Inserted Sucessfully");
+                        }
+                    }
+                    jTextField2.setText("");
+                    jTextField1.setText("");
+                    jTextField9.setText("");
+                    jTextField8.setText("");
+                    jTextField4.setText("");
+                    jComboBox4.setSelectedIndex(-1);
+
+                    dispose();
 
 //
-                CustomerHome CH = new CustomerHome();
-                CH.setVisible(true);
-              //  dispose();
-              //  CH.Customerbg.setVisible(true);                
-                CH.jTextFieldName.setText(name);
-                CH.jTextField1.setText(email);
-                CH.jTextField9.setText(phone);
-                CH.jTextField8.setText(cf1);
-                CH.jTextField4.setText(cf2);
-                CH.jComboBox4.setSelectedItem(store_id);
-                 
-                CH.jTextFieldName.setEnabled(false);
-                CH.jTextField1.setEnabled(false);
-                CH.jTextField9.setEnabled(false);
-                CH.jTextField8.setEnabled(false);
-                CH.jTextField4.setEnabled(false);
-                CH.jComboBox4.setEnabled(false);
-                        
-                conn.setAutoCommit(true);
+                    CustomerHome CH = new CustomerHome();
+                    CH.setVisible(true);
+                    //  dispose();
+                    //  CH.Customerbg.setVisible(true);                
+                    CH.jTextFieldName.setText(name);
+                    CH.jTextField1.setText(email);
+                    CH.jTextField9.setText(phone);
+                    CH.jTextField8.setText(cf1);
+                    CH.jTextField4.setText(cf2);
+                    CH.jComboBox4.setSelectedItem(store_id);
 
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed");
-            }
+                    CH.jTextFieldName.setEnabled(false);
+                    CH.jTextField1.setEnabled(false);
+                    CH.jTextField9.setEnabled(false);
+                    CH.jTextField8.setEnabled(false);
+                    CH.jTextField4.setEnabled(false);
+                    CH.jComboBox4.setEnabled(false);
 
-        } catch (Exception e) {
+                    conn.setAutoCommit(true);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed");
+                }
+
+            }catch (Exception e) {
             e.printStackTrace();
         }
 

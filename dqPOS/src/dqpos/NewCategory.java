@@ -79,6 +79,12 @@ public class NewCategory extends javax.swing.JFrame {
         jLabel23.setText("image");
         jPanelNewUser.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 80, 27));
         jPanelNewUser.add(jTextCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 240, 34));
+
+        jTextName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextNameKeyPressed(evt);
+            }
+        });
         jPanelNewUser.add(jTextName, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 240, 34));
         jPanelNewUser.add(jTextImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 240, 34));
 
@@ -127,17 +133,17 @@ public class NewCategory extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanelNewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanelNewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -166,23 +172,54 @@ public class NewCategory extends javax.swing.JFrame {
         String code = jTextCode.getText();
         String name = jTextName.getText();
         String image = jTextImage.getText();
+        final int NUM_FIELDS = 3;
+        int numCorrectFields = 0;
+        String errorMessage = "";
 
         try {
-            conn = DBConnect.getConnection();
-            Statement l_objStatement = conn.createStatement();
-            Statement l_objStatement1 = conn.createStatement();
-            String l_strCategory = "";
 
-            String l_strQuery = "insert into dq_categories "
-                    + "(code,name,image)"
-                    + "values("
-                    + "'" + code + "'"
-                    + ",'" + name + "'"
-                    + ",'" + image + "'"
-                    + ")";
-            int i = l_objStatement.executeUpdate(l_strQuery);
-            if (i > 0) {
-                JOptionPane.showMessageDialog(this, "Category Inserted Sucessfully");
+            if (jTextCode.getText().equalsIgnoreCase("<enter name>") || jTextCode.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("CODE FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                code = jTextCode.getText();
+            }
+
+            if (jTextName.getText().equalsIgnoreCase("<enter name>") || jTextName.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("NAME FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                name = jTextName.getText();
+            }
+            if (jTextImage.getText().equalsIgnoreCase("<enter name>") || jTextImage.getText().isEmpty()) {
+                errorMessage = errorMessage.concat("IMAGE FIELD IS MISSING.\n");
+            } else {
+                numCorrectFields++;
+                image = jTextImage.getText();
+            }
+            if (numCorrectFields < NUM_FIELDS) {
+
+                JOptionPane.showMessageDialog(null, errorMessage, "INVALID/INCOMPLETE USER INPUT", JOptionPane.ERROR_MESSAGE);
+                int p = JOptionPane.showConfirmDialog(this, "Do you really wnat to coninue", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (p == 0) {
+
+                    conn = DBConnect.getConnection();
+                    Statement l_objStatement = conn.createStatement();
+                    Statement l_objStatement1 = conn.createStatement();
+                    String l_strCategory = "";
+
+                    String l_strQuery = "insert into dq_categories "
+                            + "(code,name,image)"
+                            + "values("
+                            + "'" + code + "'"
+                            + ",'" + name + "'"
+                            + ",'" + image + "'"
+                            + ")";
+                    int i = l_objStatement.executeUpdate(l_strQuery);
+                    if (i > 0) {
+                        JOptionPane.showMessageDialog(this, "Category Inserted Sucessfully");
+                    }
+                }
                 jTextCode.setText(" ");
                 jTextName.setText(" ");
                 jTextImage.setText(" ");
@@ -211,6 +248,12 @@ public class NewCategory extends javax.swing.JFrame {
         dispose();
         new CategoryHome().setVisible(true);
     }//GEN-LAST:event_jButtonCancelActionPerformed
+
+    private void jTextNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextNameKeyPressed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jTextNameKeyPressed
 
     /**
      * @param args the command line arguments
